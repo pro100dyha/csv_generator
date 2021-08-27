@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+    <h2>Data schemas </h2>
+
+    <table>
+    <tr class="col-md-4">
+        <ol>
+            {% for profile in object_list %}
+                <li>
+                    <a href="{% url 'profile-update' profile.pk %}"> {{ profile.name }} |</a>
+                    <a > {{ profile.date_modified }} |</a>
+                    <a href="{% url 'profile-update' profile.pk %}">Edit |</a>
+                    <a href="{% url 'profile-delete' profile.pk %}">Delete |</a>
+                </li>
+            {% empty %}
+                <li>No schemas yet.</li>
+            {% endfor %}
+
+        </ol>
+        <p>
+            <a href="{% url 'profile-add' %}">Add new schema</a>
+        </p>
+    </tr>
+    </table>
+
+{% endblock %}

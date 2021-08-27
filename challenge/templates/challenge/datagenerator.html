@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+    <h2>Data set </h2>
+
+        <form action="." method="post">
+            {% csrf_token %}
+            <label for="count"> Rows:</label>
+            <input type="number" id="count" name="count" min="1" required >
+            <input type="submit" value="Generate data"/>
+        </form>
+        <ol>
+                {% for data_set in object_list %}
+                <li>
+                    {{ data_set.data_schema.name }} |
+                    {{ data_set.date_created}} |
+                    {% if  data_set.csv_file %}
+                        Ready |
+                        <a  href="{{ data_set.csv_file.url }}" download> Download </a>
+                    {% else %}
+                        Processing
+                    {% endif %}
+                </li>
+                {% endfor %}
+        </ol>
+{% endblock %}
