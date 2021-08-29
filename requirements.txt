@@ -37,4 +37,4 @@ wcwidth==0.2.5
 cloudinary==1.26.0
 django-cloudinary-storage==0.3.0
 django-storages==1.6.5
-boto3==1.4.7
+boto3==1.18.31
