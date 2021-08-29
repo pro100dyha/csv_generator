@@ -1,1 +1,1 @@
-web: gunicorn challenge.wsgi --log-file -
+web: gunicorn PLANEKS.wsgi --log-file -
