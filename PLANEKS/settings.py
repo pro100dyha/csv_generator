@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'cloudinary_storage',
     'django.contrib.staticfiles',
     'django_celery_beat',
     'celery_tasks',
@@ -96,16 +95,8 @@ WSGI_APPLICATION = 'PLANEKS.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dfsaep9l3s8vgb',
-        'USER': 'lflagzhhurbllu',
-        'PASSWORD': '9e43dbb5b6a9dedda469ca0a5f49ed363a1787d157f11902299e34d16dc3b213',
-        'HOST': 'postgres://lflagzhhurbllu:9e43dbb5b6a9dedda469ca0a5f49ed363a1787d157f11902299e34d16dc3b213@ec2-44-196-8-220.compute-1.amazonaws.com:5432/dfsaep9l3s8vgb',
-        'PORT': 5432
-    }
-}
+
+DATABASES = {'default': dj_database_url.config(conn_max_age=600, ssl_require=True)}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -178,25 +169,14 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIME_ZONE = TIME_ZONE
 CELERY_ENABLE_UTC = True
 
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', 'csv-fake')
+AWS_S3_HOST = 's3.eu-central-1.amazonaws.com'
+AWS_ACCESS_KEY_ID = 'AKIA2FCIGN6SXS5XYJV4'
+AWS_SECRET_ACCESS_KEY = '4H6IipY6dB5LuvWlcDd1eZzleCyTE0p95reRC5yv'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.eu-central-1.amazonaws.com'
+AWS_S3_REGION_NAME = 'eu-central-1'
 
+AWS_DEFAULT_ACL = 'public-read'
 
-
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': 'hlqbznxlp',
-#     'API_KEY': '565592258849138',
-#     'API_SECRET': 'W9ATUE2Zujrtnm41q0vnYEe8tqU',
-# }
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_URL = os.environ.get('AWS_URL')
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_MEDIA_URL = "{}/{}/".format(AWS_URL, AWS_STORAGE_BUCKET_NAME)
-
-MEDIA_URL = AWS_MEDIA_URL
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'PLANEKS.custom_storages.MediaStorage'
