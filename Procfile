@@ -1,3 +1,2 @@
 web: gunicorn PLANEKS.wsgi --log-file -
-celery: celery worker -A celery_tasks -l info -c 4
-
+celery: celery -A celery_tasks worker -c 2 -l info
